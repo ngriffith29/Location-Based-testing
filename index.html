@@ -1,18 +1,38 @@
 <html>
-    <head>
-        <title>AR.js Basic Projected Camera Example</title>
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-        <!-- Look-at component. We don't need this now, but we will later. -->
-        <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    </head>
-    <body>
-    <a-scene
-        vr-mode-ui="enabled: false"
-        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+
+<head>
+    <title>AR.js Basic Projected Camera Example</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <!-- Look-at component. We don't need this now, but we will later. -->
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene vr-mode-ui="enabled: false" arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer='antialias: true; alpha: true'>
-            <a-camera gps-projected-camera rotation-reader></a-camera>
-            <a-box gps-projected-entity-place='latitude:41.28602351615006 ; longitude:-82.83719483995301 ;' material='color: red' scale='10 10 10'></a-box>
-        </a-scene>
-    </body>
+        <a-assets id="sound" src="sound.mp3" preload="auto"></a-assets>
+        <a-camera gps-projected-camera rotation-reader></a-camera>
+        <a-box gps-projected-entity-place='latitude:41.28602351615006 ; longitude:-82.83719483995301 ;'
+            material='color: red' scale='10 10 10'></a-box>
+    </a-scene>
+</body>
+
+
+
+
+<script>
+    AFRAME.registerComponent('soundhandler', {
+        tick: function () {
+            // marker is the object3D of marker
+            if (marker.visible && !this.markervisible) {
+                entity.components.sound.playSound();
+                this.markervisible = true;
+            } else if (!marker.visible) {
+                this.markervisible = false;
+            }
+        }
+    });
+</script>
+
 </html>
